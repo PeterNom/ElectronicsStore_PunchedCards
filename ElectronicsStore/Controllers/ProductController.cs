@@ -1,5 +1,8 @@
-﻿using ElectronicsStore.Repositories;
+﻿using ElectronicsStore.Models;
+using ElectronicsStore.Models.ViewModels;
+using ElectronicsStore.Repositories;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace ElectronicsStore.Controllers
 {
@@ -17,6 +20,27 @@ namespace ElectronicsStore.Controllers
         public IActionResult Index()
         {
             return View();
+        }
+
+        public async Task<IActionResult> Details(int id)
+        {
+            var product = await _productRepository.GetProductByIdAsync(id);
+
+            if (product == null)
+            {
+                return NotFound();
+            }
+
+            DetailsViewModel detailsViewModel = new DetailsViewModel(product);
+
+            return View(detailsViewModel);
+        }
+        
+        public async Task<IActionResult> CategoryList(int id)
+        {
+            var productsByCategory = await _productRepository.GetProductsByCategoryAsync(id);
+
+            return View(productsByCategory);
         }
     }
 }

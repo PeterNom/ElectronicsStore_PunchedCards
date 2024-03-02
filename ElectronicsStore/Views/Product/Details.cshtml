@@ -1,0 +1,17 @@
+﻿@model DetailsViewModel
+
+<h3 >
+    @Model.Product.Name
+</h3>
+
+<ul>
+    <img alt="@Model.Product.Name" src="@Model.Product.ImgUrl" />
+    <li>@Model.Product.Name</li>
+    <li>@Model.Product.Description</li>
+    <li>@Model.Product.Price</li>
+    <li>@Model.Product.InStock</li>
+    <li>@Model.Product.Category.Name</li>
+</ul>
+<div>
+    <a asp-controller="Home" asp-action="Index">Back to overview</a>
+</div>

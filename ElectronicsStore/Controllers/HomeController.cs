@@ -10,18 +10,16 @@ namespace ElectronicsStore.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly IProductRepository _productRepository;
-        private readonly ICategoryRepository _categoryRepository;
 
-        public HomeController(ILogger<HomeController> logger, IProductRepository productRepository, ICategoryRepository categoryRepository)
+        public HomeController(ILogger<HomeController> logger, IProductRepository productRepository)
         {
             _logger = logger;
             _productRepository = productRepository;
-            _categoryRepository = categoryRepository;
         }
 
         public async Task<IActionResult> Index()
         {
-            IEnumerable<Product> deals = await _productRepository.GetDeals();
+            IEnumerable<Product> deals = await _productRepository.GetDealsAsync();
 
             var HomeModel = new HomeViewModel(deals);
 

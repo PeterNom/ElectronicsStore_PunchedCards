@@ -14,7 +14,7 @@ namespace ElectronicsStore.Repositories
             _applicationDbContext = applicationDbContext;
         }
 
-        public async Task<IEnumerable<Product>> GetDeals()
+        public async Task<IEnumerable<Product>> GetDealsAsync()
         {
             var dealProducts = await _applicationDbContext.Products
                 .Include(c => c.Category)
@@ -24,7 +24,7 @@ namespace ElectronicsStore.Repositories
             return dealProducts;
         }
 
-        public async Task<Product?> GetProductById(int id)
+        public async Task<Product?> GetProductByIdAsync(int id)
         {
             var product = await _applicationDbContext.Products
                 .FirstOrDefaultAsync(p => p.ProductId == id);
@@ -32,11 +32,21 @@ namespace ElectronicsStore.Repositories
             return product;
         }
 
-        public async Task<IEnumerable<Product>> SearchProduct(string searchQuery)
+        public async Task<IEnumerable<Product>> SearchProductAsync(string searchQuery)
         {
             var searchResults = await _applicationDbContext.Products.Where(p => p.Name.Contains(searchQuery)).ToListAsync();
 
             return searchResults;
+        }
+
+        public async Task<IEnumerable<Product>> GetProductsByCategoryAsync(int id)
+        {
+            var productsByCategory = await _applicationDbContext.Products
+                .AsNoTracking()
+                .Include(p => p.Category)
+                .Where(p => p.CategoryId == id)
+                .ToListAsync();
+            return productsByCategory;
         }
     }
 }

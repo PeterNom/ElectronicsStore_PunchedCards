@@ -13,7 +13,7 @@ namespace ElectronicsStore.Repositories
             _applicationDbContext = applicationDbContext;
         }
 
-        public async Task<IEnumerable<Category>> GetAll()
+        public async Task<IEnumerable<Category>> GetAllAsync()
         {
             var allCategories = await _applicationDbContext.Categories.OrderBy(c => c.Name).ToListAsync();
             

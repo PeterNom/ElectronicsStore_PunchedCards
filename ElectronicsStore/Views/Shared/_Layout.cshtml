@@ -24,8 +24,8 @@
         <div >
             <nav>
                 <ul>
-                    <li><a href="/">Products</a></li>
-                    <li><a href="pies.html">Top Deals</a></li>
+                    <li><a href="/">Top Deals</a></li>
+                    <li><a asp-controller="Category" asp-action="Index">Categories</a></li>
                     <li><a href="contact.html">Help</a></li>
                     <li><a href="contact.html">Contact</a></li>
                 </ul>
@@ -45,6 +45,7 @@
             &copy; 2024 - ElectronicsStore - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
     </footer>
+    
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
