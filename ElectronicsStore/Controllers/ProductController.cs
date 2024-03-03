@@ -3,6 +3,7 @@ using ElectronicsStore.Models.ViewModels;
 using ElectronicsStore.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using System.Runtime.CompilerServices;
 
 namespace ElectronicsStore.Controllers
 {
@@ -41,6 +42,11 @@ namespace ElectronicsStore.Controllers
             var productsByCategory = await _productRepository.GetProductsByCategoryAsync(id);
 
             return View(productsByCategory);
+        }
+        
+        public IActionResult Search()
+        {
+            return View();
         }
     }
 }

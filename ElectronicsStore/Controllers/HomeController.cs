@@ -20,7 +20,7 @@ namespace ElectronicsStore.Controllers
         public async Task<IActionResult> Index()
         {
             IEnumerable<Product> deals = await _productRepository.GetDealsAsync();
-
+            _logger.LogDebug("My message!");
             var HomeModel = new HomeViewModel(deals);
 
             return View(HomeModel);

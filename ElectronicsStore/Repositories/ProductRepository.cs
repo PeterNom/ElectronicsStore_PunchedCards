@@ -27,6 +27,7 @@ namespace ElectronicsStore.Repositories
         public async Task<Product?> GetProductByIdAsync(int id)
         {
             var product = await _applicationDbContext.Products
+                .Include (c => c.Category)
                 .FirstOrDefaultAsync(p => p.ProductId == id);
 
             return product;
