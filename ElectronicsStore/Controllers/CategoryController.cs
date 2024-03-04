@@ -22,6 +22,5 @@ namespace ElectronicsStore.Controllers
 
             return View(categories);
         }
-
     }
 }

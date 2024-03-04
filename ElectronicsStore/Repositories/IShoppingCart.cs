@@ -6,10 +6,10 @@ namespace ElectronicsStore.Repositories
     public interface IShoppingCart
     {
         void AddToCart(Product product);
-        Task<int> RemoveFromCart(Product product);
-        List<ShoppingCartItem> GetShoppingCartItems();
+        Task<int> RemoveFromCartAsync(Product product);
+        Task<List<ShoppingCartItem>> GetShoppingCartItems();
         void ClearCart();
         decimal GetShoppingCartTotal();
-        Task<List<ShoppingCartItem>> ShoppingCartItems { get; set; }
+        List<ShoppingCartItem> ShoppingCartItems { get; set; }
     }
 }

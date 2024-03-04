@@ -18,7 +18,8 @@ namespace ElectronicsStore.Repositories
         {
             ISession? session = services.GetRequiredService<IHttpContextAccessor>()?.HttpContext?.Session;
 
-            ApplicationDbContext context = services.GetService<ApplicationDbContext>() ?? throw new Exception("Error initializing");
+            ApplicationDbContext context = services.GetService<ApplicationDbContext>() 
+                ?? throw new Exception("Error initializing");
 
             string cartId = session?.GetString("CartId") ?? Guid.NewGuid().ToString();
 
@@ -49,44 +50,16 @@ namespace ElectronicsStore.Repositories
             _applicationDbContext.SaveChanges();
         }
 
-        public void ClearCart()
-        {
-            var cartItems = _applicationDbContext.ShoppingCartItems
-                .Where(sh => sh.ShoppingCartId == ShoppingCartId);
-            
-            _applicationDbContext.ShoppingCartItems.RemoveRange(cartItems);
-
-            _applicationDbContext.SaveChanges();
-        }
-
-        public async Task<List<ShoppingCartItem>> GetShoppingCartItems()
-        {
-            return await _applicationDbContext.ShoppingCartItems
-                .Where(c => c.ShoppingCartId == ShoppingCartId)
-                .Include(p => p.Product)
-                .ToListAsync();
-        }
-
-        public decimal GetShoppingCartTotal()
-        {
-            var total = _applicationDbContext.ShoppingCartItems
-                .Where(sh => sh.ShoppingCartId == ShoppingCartId)
-                .Select(sh => sh.Amount * sh.Product.Price)
-                .Sum();
-
-            return total;
-        }
-
-        public async Task<int> RemoveFromCart(Product product)
+        public async Task<int> RemoveFromCartAsync(Product product)
         {
             var cartItem = _applicationDbContext.ShoppingCartItems
                 .SingleOrDefault(sh => sh.ShoppingCartId == ShoppingCartId && sh.Product.ProductId == product.ProductId);
-            
+
             var localAmount = 0;
 
             if (cartItem != null)
             {
-                if(cartItem.Amount>1)
+                if (cartItem.Amount > 1)
                 {
                     cartItem.Amount--;
                     localAmount = cartItem.Amount;
@@ -100,5 +73,35 @@ namespace ElectronicsStore.Repositories
 
             return localAmount;
         }
+
+        public async Task<List<ShoppingCartItem>> GetShoppingCartItems()
+        {
+            return await _applicationDbContext.ShoppingCartItems
+                .Where(c => c.ShoppingCartId == ShoppingCartId)
+                .Include(p => p.Product)
+                .ToListAsync();
+        }
+
+        public void ClearCart()
+        {
+            var cartItems = _applicationDbContext.ShoppingCartItems
+                .Where(sh => sh.ShoppingCartId == ShoppingCartId);
+            
+            _applicationDbContext.ShoppingCartItems.RemoveRange(cartItems);
+
+            _applicationDbContext.SaveChanges();
+        }
+
+        public decimal GetShoppingCartTotal()
+        {
+            var total = _applicationDbContext.ShoppingCartItems
+                .Where(sh => sh.ShoppingCartId == ShoppingCartId)
+                .Select(sh => sh.Amount * sh.Product.Price)
+                .Sum();
+
+            return total;
+        }
+
+        
     }
 }

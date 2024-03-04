@@ -1,3 +1,42 @@
 ﻿@model ShoppingCartViewModel
 
+<h3>
+    Shopping cart
+</h3>
 
+<div>
+    <div>
+        @foreach (var line in Model.ShoppingCart.ShoppingCartItems)
+        {
+            <div>
+                <div>
+                    <div>
+                        <img src="@line.Product.ImgThumbUrl" alt="@line.Product.Name">
+                    </div>
+                    <div>
+                        <div>
+                            <h5>@line.Amount x @line.Product.Name</h5>
+                            <div >
+                                <h6>@line.Product.Description</h6>
+                                <h2>@line.Product.Price.ToString("c")</h2>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+    <div>
+        <div>
+            <div>
+                <h4>Total:</h4>
+                <h4>@Model.ShoppingCartTotal.ToString("c")</h4>
+            </div>
+            <hr />
+            <div>
+                <a asp-controller="Order"
+                   asp-action="Checkout"><h4>Check out now!</h4></a>
+            </div>
+        </div>
+    </div>
+</div>
