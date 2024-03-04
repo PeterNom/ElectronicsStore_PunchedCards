@@ -3,10 +3,11 @@
 <br />
 <br />
   Enter your search query:
-<input id="txtProductName" type="text" />
+<input id="searchInput" type="text" placeholder="Search" name="SearchString" />
 <button id="searchButton">Search</button>
 <br />
 <br />
+
 <table id="tblProducts" cellpadding="0" cellspacing="0">
     <tr>
         <th style="width: 120px"></th>
@@ -15,3 +16,35 @@
     </tr>
     <tbody></tbody>
 </table>
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        $('button').click(function () {
+            var searchQuery = $.trim($("#searchInput").val());
+            $("table tbody").html("");
+            $.ajax({
+                type: "POST",
+                url: "/api/search",
+                data: "\"" + searchQuery + "\"",
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (products) {
+                    var table = $("#tblProducts");
+                    table.find("tr:not(:first)").remove();
+                    $.each(products, function (i, product) {
+                        $("tbody").append($("<tr>"));
+                        appendElement = $("tbody tr").last();
+                        appendElement.append($("<td>").html('<img src=' + product.imgUrl + '>'));
+                        appendElement.append($("<td>").html('<a href="/product/details/' + product.productId + '">' + product.name + '</a>'));
+                        appendElement.append($("<td>").html(product.price));
+                    })
+                },
+                error: function (xhr, status, error) {
+                    console.log(xhr)
+                }
+            });
+        });
+    });
+
+</script>
