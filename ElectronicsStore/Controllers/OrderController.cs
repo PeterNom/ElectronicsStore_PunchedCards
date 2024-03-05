@@ -1,9 +1,11 @@
 ﻿using ElectronicsStore.Models;
 using ElectronicsStore.Repositories;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ElectronicsStore.Controllers
 {
+    [Authorize]
     public class OrderController : Controller
     {
         private readonly IOrderRepository _orderRepository;
@@ -23,7 +25,7 @@ namespace ElectronicsStore.Controllers
         [HttpPost]
         public async Task<IActionResult> Checkout(Order order)
         {
-            var items = await _shoppingCart.GetShoppingCartItems();
+            var items = await _shoppingCart.GetShoppingCartItemsAsync();
             _shoppingCart.ShoppingCartItems = items;
 
             if (_shoppingCart.ShoppingCartItems.Count == 0)

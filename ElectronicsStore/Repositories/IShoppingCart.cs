@@ -7,7 +7,8 @@ namespace ElectronicsStore.Repositories
     {
         void AddToCart(Product product);
         Task<int> RemoveFromCartAsync(Product product);
-        Task<List<ShoppingCartItem>> GetShoppingCartItems();
+        Task<List<ShoppingCartItem>> GetShoppingCartItemsAsync();
+        List<ShoppingCartItem> GetShoppingCartItems();
         void ClearCart();
         decimal GetShoppingCartTotal();
         List<ShoppingCartItem> ShoppingCartItems { get; set; }

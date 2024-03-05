@@ -13,9 +13,9 @@ namespace ElectronicsStore.Components
             _shoppingCart = shoppingCart;
         }
 
-        public async Task<IViewComponentResult> Invoke()
+        public IViewComponentResult Invoke()
         {
-            var items = await _shoppingCart.GetShoppingCartItems();
+            var items = _shoppingCart.GetShoppingCartItems();
             _shoppingCart.ShoppingCartItems = items;
 
             var shoppingCartViewModel = new ShoppingCartViewModel(_shoppingCart, _shoppingCart.GetShoppingCartTotal());

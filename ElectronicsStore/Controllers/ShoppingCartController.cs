@@ -17,7 +17,7 @@ namespace ElectronicsStore.Controllers
 
         public async Task<ViewResult> Index()
         {
-            var items = await _shoppingCart.GetShoppingCartItems();
+            var items = await _shoppingCart.GetShoppingCartItemsAsync();
             _shoppingCart.ShoppingCartItems = items;
 
             var shoppingCartViewModel = new ShoppingCartViewModel(_shoppingCart, _shoppingCart.GetShoppingCartTotal());

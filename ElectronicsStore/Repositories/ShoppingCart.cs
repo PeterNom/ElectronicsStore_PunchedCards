@@ -74,14 +74,20 @@ namespace ElectronicsStore.Repositories
             return localAmount;
         }
 
-        public async Task<List<ShoppingCartItem>> GetShoppingCartItems()
+        public async Task<List<ShoppingCartItem>> GetShoppingCartItemsAsync()
         {
             return await _applicationDbContext.ShoppingCartItems
                 .Where(c => c.ShoppingCartId == ShoppingCartId)
                 .Include(p => p.Product)
                 .ToListAsync();
         }
-
+        public List<ShoppingCartItem> GetShoppingCartItems()
+        {
+            return _applicationDbContext.ShoppingCartItems
+                .Where(c => c.ShoppingCartId == ShoppingCartId)
+                .Include(p => p.Product)
+                .ToList();
+        }
         public void ClearCart()
         {
             var cartItems = _applicationDbContext.ShoppingCartItems

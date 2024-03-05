@@ -1,16 +1,9 @@
 ﻿@model Product
 
-<div>
-    <div>
-        <img src="@Model.ImgThumbUrl" alt="@Model.Name">
-        <div >
-            <h4 >
-                <a
-                   asp-controller="ShoppingCart"
-                   asp-action="AddToShoppingCart"
-                   asp-route-productId="@Model.ProductId"> + Add to cart</a>
-            </h4>
-
+<div class="product-card">
+    <div class="product-card-content">
+        <img class="product-card-thub" src="@Model.ImgThumbUrl" alt="@Model.Name">
+        <div>
             <div>
                 <h2>
                     <a asp-controller="Product"
@@ -21,6 +14,11 @@
                     @Model.Price.ToString("c")
                 </h5>
             </div>
+            <h4>
+                <a asp-controller="ShoppingCart"
+                   asp-action="AddToShoppingCart"
+                   asp-route-productId="@Model.ProductId"> + Add to cart</a>
+            </h4>
         </div>
     </div>
 </div>
